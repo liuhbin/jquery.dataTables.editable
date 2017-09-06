@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.0/css/jquery.dataTables.min.css" type="text/css" />
+</head>
+<body>
+    <div>
+        <table id="example">
+            <thead>
+                <tr>
+                    <td>FirstName</td>
+                    <td>LastName</td>
+                    <td>Birthday</td>
+                    <td>Age</td>
+                    <td>Sex</td>
+                    <td>Class</td>
+                    <td>Grade</td>
+                    <td>Operations</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alex1</td>
+                    <td>Nilson</td>
+                    <td>2000-01-02</td>
+                    <td>17</td>
+                    <td>M</td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Alex2</td>
+                    <td>Nilson</td>
+                    <td>2000-01-02</td>
+                    <td>17</td>
+                    <td>M</td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Alex3</td>
+                    <td>Nilson</td>
+                    <td>2000-01-02</td>
+                    <td>17</td>
+                    <td>M</td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Alex4</td>
+                    <td>Nilson</td>
+                    <td>2000-01-02</td>
+                    <td>17</td>
+                    <td>M</td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>Alex5</td>
+                    <td>Nilson</td>
+                    <td>2000-01-02</td>
+                    <td>17</td>
+                    <td>M</td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>Alex6</td>
+                    <td>Nilson</td>
+                    <td>2000-01-02</td>
+                    <td>17</td>
+                    <td>M</td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>5</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://raw.githack.com/nian2760/jquery.dataTables.editable/master/js/jquery.datatables.editable.min.js"></script>
+    <script>
+        var EditableDataTable = function () {
+            
+            var table = $("#example");
+
+            var handleEditableTable = function () {
+                // init datatables
+                table = table.DataTable({
+                    lengthMenu: [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
+                    pageLength: 5,
+                    ordering: true,
+                    columnDefs: [
+                        {
+                            targets: 7,
+                            render: function (data, type, row, meta) {
+                                return "<a class='edit' href='javascript:void(0)'>Edit</a> \
+                                    <a class='complete' style='display:none' href='javascript:void(0)'>complete</a> <a class='cancel' style='display:none' href='javascript:void(0)'>cancel</a>\
+                                 <a class='rollback' href='javascript:void(0)'>rollback</a>";
+                            },
+                            edit: false
+                        },
+                        {
+                            targets: 2,
+                            edit: {
+                                type: "date",
+                                className: "testCls"
+                            }
+                        }
+                        ,
+                        {
+                            targets: [3,4,5],
+                            edit: {
+                                //type: "text",
+                                render: function (data, row, meta) {
+                                    return "<input type='text' value='" + data + "'/>";
+                                },
+                                // complete
+                                // cell value
+                                value: function (row, cell) {
+                                    var input = $(cell).children()[0];
+                                    return $(input).val();
+                                }
+                            }
+                        }
+                    ],
+                    editable: true
+
+                });
+                
+                $(table.table().node()).on("click", ".edit", function () {
+                    // begin editing
+                    var $tr = $(this).parents("tr")[0];
+                    // "table.row()" : please refer to the official documentation https://datatables.net/reference/api/row()
+                    table.row($tr).edit();
+
+                    // show complete&cancel 
+                    $(this).siblings(".complete,.cancel").toggle();
+                })
+                .on("click", ".complete", function () {
+                    // complete edit
+                    var $tr = $(this).parents("tr")[0];
+                    table.row($tr).complete(function (newData, oldData, rowDom, callback) {
+                        console.log("new data:");
+                        console.log(newData);
+                        console.log("old data:");
+                        console.log(oldData);
+                        $.ajax({
+                            type: "get",
+                            url: "/test.json",
+                            success: function (resp) {
+                                // save
+                                // default: true
+                                callback();
+                            },
+                            error: function () {
+                                // cancel
+                                //callback(false);
+
+                                callback();
+                            }
+                        });
+                    });
+                })
+                .on("click", ".cancel", function () {
+                    // cancel edit
+                    var $tr = $(this).parents("tr")[0];
+                    table.row($tr).cancel();
+                })
+                .on("click", ".rollback", function () {
+                    // roll back to before the change
+                    var $tr = $(this).parents("tr")[0];
+                    table.row($tr).rollback();
+                });
+                
+            };
+
+            
+            return {
+                init: function () {
+                    handleEditableTable();
+                }
+            };
+        }();
+
+        $(function () {
+            EditableDataTable.init();
+        });
+    </script>
+</body>
+</html>

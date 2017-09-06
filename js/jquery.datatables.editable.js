@@ -1,4 +1,4 @@
-﻿/*
+﻿/**
  * @summary     Jquery.DataTables.Editable
  * @description Jquery.DataTables inline editor extensions
  * @version     0.1.0
@@ -94,7 +94,7 @@
                 $td.html(format);
             },
             _edit: function (row) {
-                if (row.length == 0) return;
+                if (row.length == 0 || this._info.edit.editing) return;
 
                 this._info.edit.row = row;
                 var rowData = row.data();
