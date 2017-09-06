@@ -139,11 +139,11 @@
                 $(table.table().node()).on("click", ".edit", function () {
                     // begin editing
                     var $tr = $(this).parents("tr")[0];
+                    var $this = $(this);
                     // "table.row()" : please refer to the official documentation https://datatables.net/reference/api/row()
-                    table.row($tr).edit();
-
-                    // show complete&cancel 
-                    $(this).siblings(".complete,.cancel").toggle();
+                    table.row($tr).edit(function (rowApi) {
+                        $this.siblings(".complete,.cancel").toggle();
+                    });
                 })
                 .on("click", ".complete", function () {
                     // complete edit

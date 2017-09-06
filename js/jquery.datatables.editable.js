@@ -24,8 +24,8 @@
                 return this;
             });
 
-            _api.register("row().edit()", function () {
-                this.settings()[0].oInstance.oController._edit(this);
+            _api.register("row().edit()", function (success) {
+                this.settings()[0].oInstance.oController._edit(this, success);
                 return this;
             });
 
@@ -93,7 +93,7 @@
                     format = Controller.columnRender(editOpt.type || "text", colData, rowData, clsName);
                 $td.html(format);
             },
-            _edit: function (row) {
+            _edit: function (row,success) {
                 if (row.length == 0 || this._info.edit.editing) return;
 
                 this._info.edit.row = row;
@@ -106,8 +106,10 @@
                     if (c.edit == false) n++;
                     else this._format(row, rowData, rowData[c.mData], c.idx, $.isPlainObject(c.edit) ? c.edit : Controller.defaults);
                 }
-                if (n != columns.length)
+                if (n != columns.length) {
                     this._info.edit.editing = true;
+                    success(row);
+                }
             },
             _complete: function (row, beforeCall) {
                 if (row.length == 0 || !this._info.edit.editing) return;
