@@ -1,10 +1,10 @@
 # jquery.dataTables.editable
 
-##使用
+## 使用
 
-####参数说明
+#### 参数说明
 
-| Property  |Type   |  Default |  description |
+| Property  |Type   |  Default | description |
 | ------------ | ------------ | ------------ | ------------ |
 |  edit |object&#124;bool  | true  |是否编辑&#124;单元格编辑配置   |
 |  edit.type |string |text   | 指定默认input.type   |
@@ -12,16 +12,16 @@
 |  edit.render |function   |  |自定义单元格渲染   |
 |  edit.value |function   |   |自定义单元格提取值   |
 
-####方法说明
+#### 方法说明
 
-| function  |  param |  example |description |
+| function  |  param |  example | description |
 | ------------ | ------------ | ------------ |
 | edit  |  function | edit(function(rowApi){})   |  编辑成功回调 |
 | function  |  function |complete(function (newData, oldData, rowDom, callback) {}  |  编辑完成回调 |
 | cancel   |   | cancel() |  取消编辑 |
 | rollback  |  int | rollback() |  回滚到上一次的值 |
 
-####简单初始化
+#### 简单初始化
 
 ```javascript
 $("#table").Datatable({
@@ -29,7 +29,7 @@ $("#table").Datatable({
 });
 ```
 
-####渲染列
+#### 渲染列
 
 ```javsscript
 $("#table").Datatable({
@@ -65,7 +65,7 @@ $("#table").Datatable({
 	 ]
 ```
 
-####操作
+#### 操作
 
 ```javascript
 $(table).on("click", ".edit", function () {
