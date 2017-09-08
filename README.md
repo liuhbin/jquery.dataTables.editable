@@ -1,6 +1,9 @@
 # jquery.dataTables.editable
+
 ##使用
+
 ####参数说明
+
 | Property  |Type   |  Default |  description |
 | ------------ | ------------ | ------------ | ------------ |
 |  edit |object&#124;bool  | true  |是否编辑&#124;单元格编辑配置   |
