@@ -19,6 +19,8 @@
 |  cancel |string   |cancel()   |取消编辑   |
 |  rollback |int   |rollback()   |回滚到上一次的值   |
 
+#### 初始化
+
 ``` javascript
 $("#table").Datatable({
     editable:true
