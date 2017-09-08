@@ -13,6 +13,7 @@
 |  edit.value |function   |   |自定义单元格提取值   |
 
 ####方法说明
+
 | function  |  param |  example |description |
 | ------------ | ------------ | ------------ |
 | edit  |  function | edit(function(rowApi){})   |  编辑成功回调 |
@@ -21,12 +22,15 @@
 | rollback  |  int | rollback() |  回滚到上一次的值 |
 
 ####简单初始化
+
 ```javascript
 $("#table").Datatable({
 	editable:true
 });
 ```
+
 ####渲染列
+
 ```javsscript
 $("#table").Datatable({
 	editable:true,
@@ -62,6 +66,7 @@ $("#table").Datatable({
 ```
 
 ####操作
+
 ```javascript
 $(table).on("click", ".edit", function () {
 	// begin editing
