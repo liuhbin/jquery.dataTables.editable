@@ -25,7 +25,7 @@
 
 ```javascript
 $("#table").Datatable({
-	editable:true
+    editable:true
 });
 ```
 
@@ -33,75 +33,79 @@ $("#table").Datatable({
 
 ```javsscript
 $("#table").Datatable({
-	editable:true,
-	columns:[{
-		data:"field1",
-		edit:false // not edit
-	},{
-		data:"field2",
-		edit:{
-			type:"text",  // input type
-			className:"clsName" // custom name class
-		}
-	},{
-		edit:{
-			// custom cell editing
-			render: function (data, row, meta) {
-				return "<input type='text' value='" + data + "'/>";
-			},
-			//  custom cell fetch values
-			value: function (row, cell) {
-				var input = $(cell).children()[0];
-				return $(input).val();
-			}
-		}
-	}],
-	// or
-	 columnDefs: [
-	 	{
-			target:[0,2],
-			edit:{}
-		}
-	 ]
+    editable:true,
+    columns:[{
+    	data:"field1",
+    	edit:false // not edit
+    },{
+    	data:"field2",
+    	edit:{
+    	    type:"text",  // input type
+    	    className:"clsName" // custom name class
+    	}
+    },{
+    	edit:{
+    	    // custom cell editing
+    	    render: function (data, row, meta) {
+    	    	return "<input type='text' value='" + data + "'/>";
+    	    },
+    	    //  custom cell fetch values
+    	    value: function (row, cell) {
+    	    	var input = $(cell).children()[0];
+    	    	return $(input).val();
+    	    }
+    	}
+    }],
+    // or
+    columnDefs: [
+        {
+            target:[0,2],
+            edit:{}
+        }
+    ]
+});
 ```
 
 #### 操作
 
 ```javascript
 $(table).on("click", ".edit", function () {
-	// begin editing
-	var $tr = $(this).parents("tr")[0];
-	// "table.row()" : please refer to the official documentation 
-	//  https://datatables.net/reference/api/row()
-	table.row($tr).edit(function (rowApi) {
-		// successful callback
-	});
-).on("click", ".complete", function () {
- 	// complete edit
- 	var $tr = $(this).parents("tr")[0];
- 	table.row($tr).complete(function (newData, oldData, rowDom, callback) {
-		console.log(newData);
-		console.log(oldData);
-		$.ajax({
-		 	type: "post",
-		 	url: "/update",
-		 	success: function (resp) {
-				// save
-				callback();
-		 	},
-		 	error: function () {
-				// cancel
-				callback(false);
-		 }
-	});
+    // begin editing
+    var $tr = $(this).parents("tr")[0];
+    // "table.row()" : please refer to the official documentation 
+    //  https://datatables.net/reference/api/row()
+    table.row($tr).edit(function (rowApi) {
+    	// successful callback
+    });
+)
+.on("click", ".complete", function () {
+    // complete edit
+    var $tr = $(this).parents("tr")[0];
+    table.row($tr).complete(function (newData, oldData, rowDom, callback) {
+    	console.log(newData);
+    	console.log(oldData);
+    	$.ajax({
+    	    type: "post",
+    	    url: "/update",
+    	    success: function (resp) {
+    	    	// save
+    	    	callback();
+    	    },
+    	    error: function () {
+    	    	// cancel
+    	    	callback(false);
+    	 }
+    });
  });
-}).on("click", ".cancel", function () {
-	// cancel edit
-	var $tr = $(this).parents("tr")[0];
-	table.row($tr).cancel();
-}).on("click", ".rollback", function () {
-	 // roll back to before the change
- 	var $tr = $(this).parents("tr")[0];
- 	table.row($tr).rollback();
+})
+.on("click", ".cancel", function () {
+    // cancel edit
+    var $tr = $(this).parents("tr")[0];
+    table.row($tr).cancel();
+})
+.on("click", ".rollback", function () {
+    // roll back to before the change
+    var $tr = $(this).parents("tr")[0];
+    table.row($tr).rollback();
 });
 ```
