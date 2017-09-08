@@ -1,7 +1,5 @@
 # jquery.dataTables.editable
 
-## 使用
-
 #### 参数说明
 
 | Property  |Type   |  Default | description |
@@ -23,7 +21,7 @@
 
 #### 简单初始化
 
-```javascript
+``` javascript
 $("#table").Datatable({
     editable:true
 });
@@ -31,7 +29,7 @@ $("#table").Datatable({
 
 #### 渲染列
 
-```javsscript
+``` javsscript 
 $("#table").Datatable({
     editable:true,
     columns:[{
@@ -68,7 +66,7 @@ $("#table").Datatable({
 
 #### 操作
 
-```javascript
+``` javascript 
 $(table).on("click", ".edit", function () {
     // begin editing
     var $tr = $(this).parents("tr")[0];
