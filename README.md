@@ -2,7 +2,7 @@
 
 #### 参数说明
 
-| Property  |Type   |  Default | description |
+| property  |type   |  default | description |
 | ------------ | ------------ | ------------ | ------------ |
 |  edit |object&#124;bool  | true  |是否编辑&#124;单元格编辑配置   |
 |  edit.type |string |text   | 指定默认input.type   |
@@ -12,14 +12,12 @@
 
 #### 方法说明
 
-| function  |  param |  example | description |
-| ------------ | ------------ | ------------ |
-| edit  |  function | edit(function(rowApi){})   |  编辑成功回调 |
-| function  |  function | complete(function (newData, oldData, rowDom, callback) {}  |  编辑完成回调 |
-| cancel   |   | cancel() |  取消编辑 |
-| rollback  |  int | rollback() |  回滚到上一次的值 |
-
-#### 简单初始化
+| function  |param   |  example | description |
+| ------------ | ------------ | ------------ | ------------ |
+|  edit |function  | edit(function(rowApi){})  |编辑成功回调   |
+|  complete |function |complete(function (newData, oldData, rowDom, callback) {}   | 编辑完成回调   |
+|  cancel |string   |cancel()   |取消编辑   |
+|  rollback |int   |rollback()   |回滚到上一次的值   |
 
 ``` javascript
 $("#table").Datatable({
