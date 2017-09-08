@@ -15,7 +15,7 @@
 | function  |  param |  example | description |
 | ------------ | ------------ | ------------ |
 | edit  |  function | edit(function(rowApi){})   |  编辑成功回调 |
-| function  |  function |complete(function (newData, oldData, rowDom, callback) {}  |  编辑完成回调 |
+| function  |  function | complete(function (newData, oldData, rowDom, callback) {}  |  编辑完成回调 |
 | cancel   |   | cancel() |  取消编辑 |
 | rollback  |  int | rollback() |  回滚到上一次的值 |
 
@@ -29,7 +29,7 @@ $("#table").Datatable({
 
 #### 渲染列
 
-``` javsscript 
+``` javascript 
 $("#table").Datatable({
     editable:true,
     columns:[{
